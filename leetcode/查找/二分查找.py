@@ -16,3 +16,20 @@ class Solution:
             else:
                 return m
         return -1
+    
+
+'''
+开区间写法
+'''
+class Solution:
+    def search(self, nums:list[int], target: int) -> int:
+        i,j=-1,len(nums)
+        while i+1<j:
+            m=(i+j)//2
+            if nums[m]<target:
+                i=m
+            elif nums[m]>target:
+                j=m
+            else:
+                return m
+        return -1
