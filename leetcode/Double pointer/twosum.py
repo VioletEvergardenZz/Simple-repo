@@ -5,6 +5,7 @@ class Solution(object):
         left=0
         right=len(nums)-1
         
+        '双指针'
         while True:
             sum=nums[left]+nums[right]
             if sum==target:
