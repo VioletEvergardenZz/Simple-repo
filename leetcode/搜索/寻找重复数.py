@@ -7,6 +7,6 @@ class Solution(object):
     def findDuplicate(self,nums:list[int]):
         hmap=set()
         for num in nums:
-            if num in hmap:return num
+            if num in hmap:return num    # 判断是否存在
             hmap.add(num)
         return -1
