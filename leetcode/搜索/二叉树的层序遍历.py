@@ -9,6 +9,7 @@ class TreeNode:
 
 class Solution(object):
     def levelOrder(self,root:TreeNode):
+        if not root:return []    
         queue=collections.deque()
         res=[]
         queue.append(root)
