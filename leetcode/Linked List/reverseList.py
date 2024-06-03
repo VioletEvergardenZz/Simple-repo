@@ -3,6 +3,8 @@ class ListNode:
         self.val=val
         self.next=None
 
+
+'双指针'
 def reverseList(list:ListNode,head:ListNode):
     left,right=head,None
     while left:
