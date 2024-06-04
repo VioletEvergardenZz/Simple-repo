@@ -11,7 +11,7 @@ def mergeTwoLists(list1:ListNode,list2:ListNode):
     elif list2==None:
         return list1
     elif list1.val<=list2.val:
-        list1.next=mergeTwoLists(list1.next,list2)
+        list1.next=mergeTwoLists(list1.next,list2)    # 递归
         # 返回头结点
         return list1
     else:
