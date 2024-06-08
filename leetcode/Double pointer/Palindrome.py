@@ -1,3 +1,5 @@
+# 判断回文串
+
 def is_palindrome(str,left,right):
     while left<right:
         if str[left]!=str[right]:
