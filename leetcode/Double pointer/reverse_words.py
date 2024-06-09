@@ -13,3 +13,9 @@ class Solution(object):
 str=Solution()
 result=str.reverseWords('   hello world     ')
 print(result)
+
+
+'''
+Python中split()函数，具体作用如下：
+拆分字符串。通过指定分隔符对字符串进行切片,并返回分割后的字符串列表(list)
+'''
