@@ -1,3 +1,5 @@
+'快速排序'
+
 def partiton(list,left,right):
     # 选取第一个元素作为基准值
     tmp=list[left]
