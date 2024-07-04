@@ -1,3 +1,5 @@
+'广度优先搜索 (Breadth-first search)'
+
 import queue
 
 class Node:

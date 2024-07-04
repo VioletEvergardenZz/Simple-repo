@@ -1,3 +1,5 @@
+'二叉搜索树(binary search tree)'
+
 class TreeNode:
     def __init__(self,val):
         self.val=val
