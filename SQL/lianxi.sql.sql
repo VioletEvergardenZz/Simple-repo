@@ -302,8 +302,18 @@ SELECT * FROM emp1;
 INSERT INTO emp1(id,`name`,salary)
 SELECT employee_id,last_name,salary FROM employees WHERE department_id IN (70,60);
 
+# 修改数据
+UPDATE emp1 SET hire_date = CURDATE(),salary = 6000 WHERE id = 1;
+# 删除数据
+DELETE FROM emp1 WHERE id = 2;
 
-
+# MySQL8新特性:计算列
+CREATE TABLE tb1(
+id INT,
+a INT,
+b INT,
+c INT GENERATED ALWAYS AS (a + b) VIRTUAL
+);
 
 
 
