@@ -143,30 +143,32 @@ SELECT last_name,salary
 FROM employees
 WHERE salary > (
                  SELECT salary
-								 FROM employees
-								 WHERE last_name = 'Abel'
-								 );
+				 FROM employees
+				 WHERE last_name = 'Abel'
+				);
 
 # 单行子查询 
 # 题目:返回公司工资最少的员工的last_name,job_id和salary
 SELECT last_name, job_id, salary
 FROM employees
 WHERE salary =(
-							SELECT MIN(salary)
-							FROM employees
-							);
+				SELECT MIN(salary)
+				FROM employees
+			   );
 
 # 题目:查询与141号或174号员工的manager_id和department_id相同的其他员工的employee_id,manager_id,department_id
 SELECT employee_id, manager_id, department_id
 FROM employees
 WHERE manager_id IN(
-										SELECT manager_id
-										FROM employees
-										WHERE employee_id IN (174,141))
+					SELECT manager_id
+					FROM employees
+					WHERE employee_id IN (174,141)
+					)
 AND department_id IN(
-										 SELECT department_id
-										 FROM employees
-										 WHERE employee_id IN (174,141))
+					 SELECT department_id
+				 	 FROM employees
+					 WHERE employee_id IN (174,141)
+					 )
 AND employee_id NOT IN(174,141);
 
 # 题目:查询最低工资大于50号部门最低工资的部门id和其最低工资
@@ -175,21 +177,22 @@ FROM employees
 WHERE department_id IS NOT NULL
 GROUP BY department_id
 HAVING MIN(salary) > (
-											SELECT MIN(salary)
-											FROM employees
-											WHERE department_id = 50
-											);
+					  SELECT MIN(salary)
+					  FROM employees
+					  WHERE department_id = 50
+					  );
 
 
 # 多行子查询
-# 题目:返回其它job_id中比job_id为‘IT_PROG’部门所有工资都低的员工的员工号、姓名、job_id以及salary
+# 题目:返回其它job_id中比job_id为'IT_PROG'部门所有工资都低的员工的员工号、姓名、job_id以及salary
 SELECT employee_id,last_name,job_id,salary 
 FROM employees
 WHERE job_id <> 'IT_PROG'   # IS NOT 一般用于判断是否为 NULL,而不能用于字符串比较。对于字符串比较,应使用 <> 或 !=
 AND salary < ANY(
-									SELECT salary
-									FROM employees
-									WHERE job_id = 'IT_PROG');
+				 SELECT salary
+				 FROM employees
+				 WHERE job_id = 'IT_PROG'
+				);
 
 # 题目:查询平均工资最低的部门id
 
@@ -197,18 +200,18 @@ SELECT department_id
 FROM employees
 GROUP BY department_id
 HAVING AVG(salary) <= ALL(
-												SELECT AVG(salary)
-												FROM employees
-												GROUP BY department_id
-												)
+						  SELECT AVG(salary)
+						  FROM employees
+						  GROUP BY department_id
+						 );
 # 空值问题
 SELECT last_name
 FROM employees
 WHERE employee_id NOT IN (
-													SELECT manager_id
-													FROM employees
-													WHERE manager_id IS NOT NULL
-													);
+						  SELECT manager_id
+						  FROM employees
+						  WHERE manager_id IS NOT NULL
+						  );
 
 
 # 相关子查询
@@ -216,17 +219,17 @@ WHERE employee_id NOT IN (
 SELECT last_name,salary,department_id
 FROM employees e1
 WHERE salary > (
-								SELECT AVG(salary)
-								FROM employees e2
-								WHERE e2.department_id = e1.department_id
-								);
+				SELECT AVG(salary)
+				FROM employees e2
+				WHERE e2.department_id = e1.department_id
+				);
 
 SELECT e.last_name,e.salary,e.department_id
 FROM employees e,(
-									SELECT department_id,AVG(salary) avg_sal
-									FROM employees
-									GROUP BY department_id
-									) t_dept_avg_sal
+				  SELECT department_id,AVG(salary) avg_sal
+				  FROM employees
+			      GROUP BY department_id
+				) t_dept_avg_sal
 WHERE e.department_id = t_dept_avg_sal.department_id
 AND e.salary > t_dept_avg_sal.avg_sal;
 
@@ -234,20 +237,20 @@ AND e.salary > t_dept_avg_sal.avg_sal;
 SELECT employee_id,salary
 FROM employees e
 ORDER BY(
-					SELECT department_name
-					FROM departments d
-					WHERE e.department_id = d.department_id
-					);
+		SELECT department_name
+		FROM departments d
+		WHERE e.department_id = d.department_id
+		);
 
 # 题目:若employees表中employee_id与job_history表中employee_id相同的数目不小于2,
 #       输出这些相同id的员工的employee_id,last_name和其job_id
 SELECT employee_id,last_name,job_id
 FROM employees e
 WHERE 2 <= (
-						SELECT COUNT(*)
-						FROM job_history j
-						WHERE j.employee_id = e.employee_id
-						);
+			SELECT COUNT(*)
+			FROM job_history j
+			WHERE j.employee_id = e.employee_id
+			);
 
 # 题目:查询公司管理者的employee_id,last_name,job_id,department_id信息
 SELECT DISTINCT mgr.employee_id,mgr.last_name,mgr.job_id,mgr.department_id
@@ -257,17 +260,17 @@ ON emp.manager_id = mgr.employee_id;
 SELECT employee_id,last_name,job_id,department_id
 FROM employees
 WHERE employee_id IN (
-											SELECT DISTINCT manager_id
-											FROM employees
-											);
+					  SELECT DISTINCT manager_id
+					  FROM employees
+					  );
 
 SELECT employee_id,last_name,job_id,department_id
 FROM employees e1
 WHERE EXISTS (
-							SELECT *
-							FROM employees e2
-							WHERE e1.employee_id = e2.manager_id
-							);
+			  SELECT *
+			  FROM employees e2
+			  WHERE e1.employee_id = e2.manager_id
+			  );
 
 # 题目:查询departments表中,不存在于employees表中的部门的department_id和department_name
 SELECT d.department_id,d.department_name
@@ -277,10 +280,10 @@ WHERE e.department_id is NULL;
 SELECT department_id,department_name
 FROM departments d
 WHERE NOT EXISTS(
-									SELECT *
-									FROM employees e
- 									WHERE e.department_id = d.department_id
-									);
+				SELECT *
+				FROM employees e
+ 				WHERE e.department_id = d.department_id
+				);
 
 
 
